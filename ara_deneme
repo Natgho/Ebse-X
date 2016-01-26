@@ -1,0 +1,5 @@
+#!/usr/bin/env python3
+import sys
+
+if sys.version_info[:2] <= (3, 0):
+    print("Python versiyonunuz 3 olmalidir, lutfen python 3 veya uzerini kurunuz.");
