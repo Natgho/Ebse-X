@@ -6,6 +6,7 @@
 
 import os
 import sys
+import time
 
 print("* "*40)
 print("*\t Merhaba;")
@@ -42,7 +43,6 @@ if kart_sayisi < 2:
 else:
     print("Sistemin hibrit olduğu tanımlandı.\nYükleme işlemine başlanıyor...")
 
-print("* "*40 + "\n\n")
 
 
 # Sistemde bumblebee olup olmadigi kontrol edilecek.
@@ -55,16 +55,74 @@ for icerik in bumblebee:
             print("Yükleme sonlandırılıyor...")
             sys.exit(0)
 
+#header sisteme ekleniyor
+install_header = os.popen("apt-get install linux-headers-generic")
+header_checker=0
+for headers in install_header:
+    print(headers)
+    if install_header.find("error") != -1 or install_header.find("hata") != -1:
+        print("Programlar yuklenirken hata olustu, lutfen ekran goruntusu alip,\n admin@sezerbozkir.com adresine gonderiniz.")
+        header_checker+=1
+print("* "*30)
+if header_checker==0:
+    print("Kaynaklarin eklenmesi icin gerekli olan linuc-headers yuklendi.")
 
 # Bumblebee repositoryleri sisteme eklenecek
+print("* "*30)
 print("Bumblebee kutuphaneleri sisteme ekleniyor...")
+resository_add = os.popen("add-apt-repository ppa:bumblebee/stable")
+print("Lutfen ilk kaynagin eklenmesi icin enter tusuna basiniz.")
+checker=0
+for repository_check in resository_add:
+    print(repository_check)
+    if repository_check.find("error") != -1:
+        print("Kaynaklar eklenirken hata olustu, lutfen ekran goruntusu alip,\n admin@sezerbozkir.com adresine gonderiniz.")
+        checker+=1
+print("* "*30)
+if checker==0:
+    print("ilk kaynak  ekleme islemi basari ile gerceklestirildi.")
+print("* "*30)
 
+
+resository_add2 = os.popen(" add-apt-repository ppa:ubuntu-x-swat/x-updates")
+print("Lutfen ikinci kaynagin eklenmesi icin enter tusuna basiniz.")
+checker2=0
+for repository_check2 in resository_add2:
+    print(repository_check2)
+    if repository_check2.find("error") != -1:
+        print("Kaynaklar eklenirken hata olustu, lutfen ekran goruntusu alip,\n admin@sezerbozkir.com adresine gonderiniz.")
+        checker2+=1
+print("* "*30)
+if checker2==0:
+    print("ikinci kaynak  ekleme islemi basari ile gerceklestirildi.")
+print("* "*30)
+
+print("Tum kaynaklar basari ile eklendi,\n bumblebee yuklenmeden once paketlerin guncellenmesi gerekli.")
+print("paketler guncellenmeye basliyor...")
+time.sleep(3)
+print("* "*30)
+system_update = os.popen("apt-get update")
+for updating in system_update:
+    print(updating)
+print("* "*30)
 
 # Kurulumlar gerceklestirilecek ve hata kontrolleri yapilacak.
-# Gerekirse geri silme islemleri yapilacak
+install_bumblebee = os.popen("apt-get install bumblebee bumblebee-nvidia primus")
+checker3=0
+for icerik2 in install_bumblebee:
+    print(icerik2)
+    if install_bumblebee.find("error") != -1 or install_bumblebee.find("hata") != -1:
+        print("Programlar yuklenirken hata olustu, lutfen ekran goruntusu alip,\n admin@sezerbozkir.com adresine gonderiniz.")
+        checker2+=1
+print("* "*30)
+if checker2==0:
+    print("Bumblebee ve yardimci elemanlar basariyla yuklendi.")
 
+print("* "*30)
+# Gerekirse geri silme islemleri yapilacak
 # 32 bit uyumluluk paketi yuklenecek
 
+#apt-get install linux-headers-generic
 # /etc/bumblebee/bumblebee.conf dosyasi acilacak
 
 # Dosyanin icerisindeki Driver= kisminin devamina Nvidia eklenecek
@@ -91,3 +149,4 @@ print("Bumblebee kutuphaneleri sisteme ekleniyor...")
 # http://enginsezen.com/blog/gnu-linux/31-bumblebee-kurulumu.html
 # http://ubuntulog.com/bumblebee-kurulumu.html
 
+print("* "*40 + "\n\n")

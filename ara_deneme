@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
-import sys
+import os
 
-if sys.version_info[:2] <= (3, 0):
-    print("Python versiyonunuz 3 olmalidir, lutfen python 3 veya uzerini kurunuz.");
+sezer = os.popen("pacman -S archey3")
+
+for incele in sezer:
+    print(incele)
