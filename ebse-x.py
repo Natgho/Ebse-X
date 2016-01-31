@@ -3,7 +3,6 @@
 
 # Sistemdeki yuklu python surumunun uyumlulugu denetlenecek
 
-
 import os
 import sys
 import time
@@ -70,7 +69,7 @@ if header_checker==0:
 # Bumblebee repositoryleri sisteme eklenecek
 print("* "*30)
 print("Bumblebee kutuphaneleri sisteme ekleniyor...")
-resository_add = os.popen("add-apt-repository ppa:bumblebee/stable")
+resository_add = os.popen("apt-add-repository ppa:xorg-edgers/ppa")
 print("Lutfen ilk kaynagin eklenmesi icin enter tusuna basiniz.")
 checker=0
 for repository_check in resository_add:
@@ -83,8 +82,14 @@ if checker==0:
     print("ilk kaynak  ekleme islemi basari ile gerceklestirildi.")
 print("* "*30)
 
+print("Sistem guncellestiriliyor...")
+system_update = os.popen("apt-get update")
+for updating in system_update:
+    print(updating)
+print("* "*30)
 
-resository_add2 = os.popen(" add-apt-repository ppa:ubuntu-x-swat/x-updates")
+
+resository_add2 = os.popen("add-apt-repository ppa:bumblebee/stable")
 print("Lutfen ikinci kaynagin eklenmesi icin enter tusuna basiniz.")
 checker2=0
 for repository_check2 in resository_add2:
@@ -119,16 +124,33 @@ if checker2==0:
     print("Bumblebee ve yardimci elemanlar basariyla yuklendi.")
 
 print("* "*30)
+
+install_bumblebee = os.popen("apt-get install nvidia-331 nvidia-settings")
+checker3=0
+for icerik2 in install_bumblebee:
+    print(icerik2)
+    if install_bumblebee.find("error") != -1 or install_bumblebee.find("hata") != -1:
+        print("Programlar yuklenirken hata olustu, lutfen ekran goruntusu alip,\n admin@sezerbozkir.com adresine gonderiniz.")
+        checker2+=1
+print("* "*30)
+if checker2==0:
+    print("Nvidia-331 ekran karti ve driver duzenleyici yuklendi.")
+
+print("* "*30)
 # Gerekirse geri silme islemleri yapilacak
 # 32 bit uyumluluk paketi yuklenecek
 
 #apt-get install linux-headers-generic
 # /etc/bumblebee/bumblebee.conf dosyasi acilacak
-
+filee = open("/etc/bumblebee/bumblebee.conf","r")
+print("Bumblebee conf dosyanız bulundu;")
+conf_icerigi = filee.read()
+filee.close()
+print(conf_icerigi)
 # Dosyanin icerisindeki Driver= kisminin devamina Nvidia eklenecek
-
+print("içerik uygun şekilde değiştirilecek...")
 # KernelDriver=nvidia-current kismi yuklenen nvidia surumuyle degistirilecek.
-
+duzeltilmis_conf = conf_icerigi.replace("nvidia-current","nvidia-331")
 # LibraryPath kisminin sonu editlenecek.
 
 # Default xorg modules... ile baslayan kisim editlenecek.
